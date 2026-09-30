@@ -75,7 +75,7 @@ def test_cli_parser_is_run_first():
     parser = build_parser()
     subparsers = next(action for action in parser._actions if isinstance(action, argparse._SubParsersAction))
 
-    assert set(subparsers.choices) == {"run", "runs"}
+    assert set(subparsers.choices) == {"run", "runs", "doctor"}
 
     run_help = subparsers.choices["run"].format_help()
     assert "--files" in run_help
