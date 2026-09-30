@@ -205,10 +205,7 @@ class SimulationRunner:
     RUN_STATE_DIR = Config.OASIS_SIMULATION_DATA_DIR
     
     # Scripts directory
-    SCRIPTS_DIR = os.path.join(
-        os.path.dirname(__file__),
-        '../../scripts'
-    )
+    SCRIPTS_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'scripts')
     
     # In-memory run states
     _run_states: Dict[str, SimulationRunState] = {}

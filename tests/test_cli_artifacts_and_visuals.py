@@ -169,3 +169,14 @@ def test_default_output_paths_follow_cwd_not_package(tmp_path: Path):
     root = tmp_path.resolve()
     for path in out[:4]:
         assert Path(path).resolve().is_relative_to(root), path
+
+
+def test_simulation_runner_scripts_ship_inside_the_package():
+    import app
+    from app.services.simulation_runner import SimulationRunner
+
+    package_dir = Path(app.__file__).resolve().parent
+    scripts_dir = Path(SimulationRunner.SCRIPTS_DIR).resolve()
+    assert scripts_dir.is_relative_to(package_dir)
+    for name in ("run_parallel_simulation.py", "run_twitter_simulation.py", "run_reddit_simulation.py", "action_logger.py"):
+        assert (scripts_dir / name).is_file(), name

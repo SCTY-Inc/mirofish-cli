@@ -563,7 +563,7 @@ class SimulationManager:
         """Get run instructions"""
         sim_dir = self._get_simulation_dir(simulation_id)
         config_path = os.path.join(sim_dir, "simulation_config.json")
-        scripts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../scripts'))
+        scripts_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../scripts'))
         
         return {
             "simulation_dir": sim_dir,

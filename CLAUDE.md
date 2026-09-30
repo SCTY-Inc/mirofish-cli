@@ -36,7 +36,7 @@ app/
   utils/
     llm_client.py      CLI-only LLM client with retry (claude-cli, codex-cli)
     logger.py          Structured logging
-scripts/               OASIS simulation runner scripts (subprocess)
+  scripts/             OASIS simulation runner scripts (subprocess; ship with the package)
 tests/                 pytest
 uploads/               Runtime data (gitignored)
 data/                  Graph JSON storage (gitignored)
@@ -67,7 +67,7 @@ Machine-readable verdict for agent consumption — prediction, confidence (0-1),
 - `mirofish runs list` returns a slim summary (`run_id`, `status`, `created_at`, `artifact_count`) so agent output stays narrow. Use `runs status <run_id>` for the full manifest.
 - `Config.validate()` runs at `main()` startup before argparse. An invalid `LLM_PROVIDER` (e.g. `openai` left in `.env`) now fails fast with exit 1 instead of silently dying at the first LLM call. `--help` / `-h` bypass the check.
 - `cli_display.PipelineDisplay` honors `NO_COLOR` and `sys.stdout.isatty()` when constructing the Rich `Console`, so piped / non-tty invocations stay plain.
-- Simulation runs OASIS in a subprocess via `scripts/`. The scripts add the project root to `sys.path` to import from `app.utils.oasis_llm`.
+- Simulation runs OASIS in a subprocess via `app/scripts/`. The scripts add the install root (repo root in a checkout) to `sys.path` to import from `app.utils.oasis_llm`.
 - `camel-oasis==0.2.5` and `camel-ai==0.2.78` are pinned — upgrading either can break the simulation pipeline.
 - LLM calls have automatic retry with exponential backoff (3 attempts).
 - CLI display (`cli_display.py`) uses `rich.Live` on stderr. Suppresses service-layer logs to WARNING during display. `--json` mode bypasses rich entirely.

@@ -31,7 +31,7 @@ _cleanup_done = False
 
 # Add project root to path
 _scripts_dir = os.path.dirname(os.path.abspath(__file__))
-_project_root = os.path.abspath(os.path.join(_scripts_dir, '..'))
+_project_root = os.path.abspath(os.path.join(_scripts_dir, '..', '..'))
 sys.path.insert(0, _scripts_dir)
 sys.path.insert(0, _project_root)
 
