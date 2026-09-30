@@ -15,6 +15,8 @@ dependencies = [
     # OASIS social media simulation
     "camel-oasis==0.2.5",
     "camel-ai==0.2.78",
+    # camel-ai imports mcp.server.FastMCP, removed in mcp 2.x (uv tool install ignores uv.lock)
+    "mcp<2",
 
     # File processing
     "PyMuPDF>=1.24.0",
