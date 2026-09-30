@@ -9,12 +9,13 @@ Fork of [666ghj/MiroFish](https://github.com/666ghj/MiroFish), fully translated 
 ## Commands
 
 ```bash
-uv sync                                    # install
+uv sync                                    # install (dev)
 mirofish run --files f.pdf --requirement "..." --json   # run pipeline
 mirofish runs list --json                  # list runs (slim: run_id, status, created_at, artifact_count)
 mirofish runs status <id> --json           # full manifest for a run
 mirofish runs export <id> --json           # export artifacts
 mirofish --help                            # always works even with invalid/missing .env
+mirofish doctor                            # check provider CLI + config
 uv run python -m pytest -x                 # tests
 ```
 
@@ -60,16 +61,11 @@ Machine-readable verdict for agent consumption — prediction, confidence (0-1),
 ## Config
 
 `.env` file at repo root. Key vars:
-- `LLM_PROVIDER` — `claude-cli` (default) or `codex-cli`. Validated at `main()` startup — any other value (including `openai`) exits 1 with `config error: LLM_PROVIDER must be 'claude-cli' or 'codex-cli'`. `--help` / `--version` skip validation so metadata commands always work.
-
-## Agent Integration
-
-Skill file: `~/agents/_skills/mirofish/SKILL.md`
-Symlinked into `.claude/skills/` for discovery by Claude Code and OpenClaw agents.
+- `LLM_PROVIDER` — `claude-cli` (default) or `codex-cli`. Validated at `main()` startup — any other value (including `openai`) exits 1 with `config error: LLM_PROVIDER must be 'claude-cli' or 'codex-cli'`. `--help` skips validation so metadata commands always work.
 
 ## Gotchas
 - `mirofish runs list` returns a slim summary (`run_id`, `status`, `created_at`, `artifact_count`) so agent output stays narrow. Use `runs status <run_id>` for the full manifest.
-- `Config.validate()` runs at `main()` startup before argparse. An invalid `LLM_PROVIDER` (e.g. `openai` left in `.env`) now fails fast with exit 1 instead of silently dying at the first LLM call. `--help` / `-h` / `--version` bypass the check.
+- `Config.validate()` runs at `main()` startup before argparse. An invalid `LLM_PROVIDER` (e.g. `openai` left in `.env`) now fails fast with exit 1 instead of silently dying at the first LLM call. `--help` / `-h` bypass the check.
 - `cli_display.PipelineDisplay` honors `NO_COLOR` and `sys.stdout.isatty()` when constructing the Rich `Console`, so piped / non-tty invocations stay plain.
 - Simulation runs OASIS in a subprocess via `scripts/`. The scripts add the project root to `sys.path` to import from `app.utils.oasis_llm`.
 - `camel-oasis==0.2.5` and `camel-ai==0.2.78` are pinned — upgrading either can break the simulation pipeline.

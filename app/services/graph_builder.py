@@ -11,7 +11,7 @@ from typing import Dict, Any, List, Optional, Callable
 from dataclasses import dataclass
 from datetime import datetime
 
-from ..models.task import TaskManager, TaskStatus
+from ..core.task_manager import TaskManager, TaskStatus
 from .text_processor import TextProcessor
 from .graph_db import GraphDatabase
 from .graph_storage import GraphStorage
