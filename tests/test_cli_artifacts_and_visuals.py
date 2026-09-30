@@ -149,3 +149,23 @@ def test_cli_runs_list_and_status_emit_json(tmp_path: Path, monkeypatch: pytest.
     assert exit_code == 0
     assert export_payload["artifact"] == "swarm_overview"
     assert export_payload["path"].endswith("visuals/swarm-overview.svg")
+
+
+def test_default_output_paths_follow_cwd_not_package(tmp_path: Path):
+    import subprocess
+
+    code = (
+        "from app.config import Config;"
+        "from app.services.simulation_manager import SimulationManager;"
+        "from app.utils.logger import LOG_DIR;"
+        "print(Config.UPLOAD_FOLDER, Config.DATA_DIR, SimulationManager.SIMULATION_DATA_DIR, LOG_DIR, sep='\\n')"
+    )
+    repo_root = Path(__file__).resolve().parent.parent
+    env = {k: v for k, v in __import__("os").environ.items() if k != "DATA_DIR"}
+    env["PYTHONPATH"] = str(repo_root)
+    out = subprocess.run(
+        [sys.executable, "-c", code], cwd=tmp_path, env=env, capture_output=True, text=True, check=True
+    ).stdout.split("\n")
+    root = tmp_path.resolve()
+    for path in out[:4]:
+        assert Path(path).resolve().is_relative_to(root), path

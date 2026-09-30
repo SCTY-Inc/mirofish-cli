@@ -24,7 +24,7 @@ def _ensure_utf8_stdout():
 
 
 # Log directory
-LOG_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'logs')
+LOG_DIR = os.path.abspath('logs')  # relative to the current working directory
 
 
 def setup_logger(name: str = 'mirofish', level: int = logging.DEBUG) -> logging.Logger:

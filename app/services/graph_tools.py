@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from .graph_db import GraphDatabase
 from .graph_storage import GraphStorage
 
+from ..config import Config
 from ..utils.logger import get_logger
 from ..utils.llm_client import LLMClient
 
@@ -444,7 +445,7 @@ class GraphToolsService:
         import os
         import csv
 
-        sim_dir = os.path.join(os.path.dirname(__file__), f'../../uploads/simulations/{simulation_id}')
+        sim_dir = os.path.join(Config.OASIS_SIMULATION_DATA_DIR, simulation_id)
 
         reddit_path = os.path.join(sim_dir, "reddit_profiles.json")
         if os.path.exists(reddit_path):

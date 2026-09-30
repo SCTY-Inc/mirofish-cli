@@ -40,17 +40,17 @@ class Config:
 
     LLM_PROVIDER = os.environ.get("LLM_PROVIDER", "claude-cli").strip().lower()
 
-    DATA_DIR = _resolve_path(os.path.join(os.path.dirname(__file__), "../data/graphs"), "DATA_DIR")
+    DATA_DIR = _resolve_path("data/graphs", "DATA_DIR")
 
     MAX_CONTENT_LENGTH = 50 * 1024 * 1024
-    UPLOAD_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads"))
+    UPLOAD_FOLDER = os.path.abspath("uploads")  # relative to the current working directory
     ALLOWED_EXTENSIONS = {"pdf", "md", "txt", "markdown"}
 
     DEFAULT_CHUNK_SIZE = 500
     DEFAULT_CHUNK_OVERLAP = 50
 
     OASIS_DEFAULT_MAX_ROUNDS = int(os.environ.get("OASIS_DEFAULT_MAX_ROUNDS", "10"))
-    OASIS_SIMULATION_DATA_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../uploads/simulations"))
+    OASIS_SIMULATION_DATA_DIR = os.path.join(UPLOAD_FOLDER, "simulations")
 
     OASIS_TWITTER_ACTIONS = [
         "CREATE_POST", "LIKE_POST", "REPOST", "FOLLOW", "DO_NOTHING", "QUOTE_POST",

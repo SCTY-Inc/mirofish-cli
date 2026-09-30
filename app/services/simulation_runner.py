@@ -17,6 +17,7 @@ from datetime import datetime
 from enum import Enum
 from queue import Queue
 
+from ..config import Config
 from ..utils.logger import get_logger
 from .graph_memory_updater import GraphMemoryManager
 from .simulation_ipc import SimulationIPCClient
@@ -201,10 +202,7 @@ class SimulationRunner:
     """
     
     # Run state storage directory
-    RUN_STATE_DIR = os.path.join(
-        os.path.dirname(__file__),
-        '../../uploads/simulations'
-    )
+    RUN_STATE_DIR = Config.OASIS_SIMULATION_DATA_DIR
     
     # Scripts directory
     SCRIPTS_DIR = os.path.join(

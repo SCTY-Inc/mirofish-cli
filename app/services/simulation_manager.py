@@ -15,6 +15,7 @@ from enum import Enum
 from ..utils.logger import get_logger
 from .entity_reader import EntityReader
 from .oasis_profile_generator import OasisProfileGenerator
+from ..config import Config
 from .simulation_config_generator import SimulationConfigGenerator
 from .simulation_platforms import normalize_content_platform
 
@@ -123,10 +124,7 @@ class SimulationManager:
     """
     
     # Simulation data storage directory
-    SIMULATION_DATA_DIR = os.path.join(
-        os.path.dirname(__file__), 
-        '../../uploads/simulations'
-    )
+    SIMULATION_DATA_DIR = Config.OASIS_SIMULATION_DATA_DIR
     
     def __init__(self):
         # Ensure directory exists
