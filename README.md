@@ -4,6 +4,15 @@ A social simulation scenario engine. Feed it documents describing any scenario, 
 
 > Fork of [666ghj/MiroFish](https://github.com/666ghj/MiroFish) — fully translated to English, CLI-only, Claude/Codex CLI support added.
 
+## Install
+
+```bash
+uv tool install git+https://github.com/SCTY-Inc/mirofish-cli
+mirofish doctor   # check provider CLI (claude/codex) and config
+```
+
+Requires Python 3.11-3.12 and [uv](https://docs.astral.sh/uv/). For development, use `uv sync` (see Quick start).
+
 ## What it does
 
 1. **Feed reality seeds** — PDFs, markdown, or text files (news articles, policy drafts, financial reports, anything)
