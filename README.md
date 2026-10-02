@@ -6,6 +6,21 @@ Fork of [666ghj/MiroFish](https://github.com/666ghj/MiroFish), translated to Eng
 
 ## Install
 
+One-command bootstrap (installs uv if missing, creates `.env`, syncs
+dependencies, checks your LLM provider CLI and runs `mirofish doctor`):
+
+```bash
+# macOS / Linux
+./scripts/setup.sh                      # or: --provider codex-cli, --yes
+
+# Windows (PowerShell)
+.\scripts\setup.ps1                     # or: -Provider codex-cli, -Yes
+# If script execution is disabled (stock Windows default):
+powershell -ExecutionPolicy Bypass -File scripts\setup.ps1
+```
+
+Or manually:
+
 ```bash
 uv tool install git+https://github.com/SCTY-Inc/mirofish-cli
 mirofish doctor   # check provider CLI (claude/codex) and config
