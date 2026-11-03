@@ -78,11 +78,10 @@ class LLMClient:
         system_text, conversation = self._split_system_message(messages)
 
         prompt_parts = []
-        if system_text:
-            prompt_parts.append(f"SYSTEM INSTRUCTIONS:\n{system_text}\n")
+        json_mode = bool(response_format and response_format.get("type") == "json_object")
 
-        if response_format and response_format.get("type") == "json_object":
-            prompt_parts.append("IMPORTANT: Respond with valid JSON only. No markdown, no explanation, just pure JSON.\n")
+        if not json_mode and system_text:
+            prompt_parts.append(f"SYSTEM INSTRUCTIONS:\n{system_text}\n")
 
         for msg in conversation:
             role = msg.get("role", "user").upper()
@@ -90,9 +89,16 @@ class LLMClient:
 
         prompt = "\n\n".join(prompt_parts)
 
+        cmd = ["claude", "-p", "--output-format", "json", "--no-session-persistence"]
+        if json_mode:
+            json_system = "You are a JSON API endpoint. Output only a valid JSON object. No prose, no markdown fences."
+            if system_text:
+                json_system = f"{system_text}\n\n{json_system}"
+            cmd += ["--system-prompt", json_system]
+
         try:
             result = subprocess.run(
-                ["claude", "-p", "--output-format", "json", prompt],
+                cmd + [prompt],
                 capture_output=True, text=True, timeout=300,
                 cwd="/tmp"
             )
